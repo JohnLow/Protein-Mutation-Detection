@@ -10,11 +10,17 @@ package FileIteration;
  */
 public class GeneData {
  
-    
-    public String getName(){  //retrieve gene name from TCGA data
+    public String getName(String str1){  //retrieve gene name from TCGA data
         
-        String geneName = null;
         
+        String regex = "[\t]";
+                 
+        String[] parsedLine = str1.split(regex);
+        
+        
+       // parsedLine[0] = geneName;
+        
+        String geneName = parsedLine[0];
         
         
         return geneName;
@@ -22,7 +28,7 @@ public class GeneData {
     
     
     
-    public String[] getAccession(){  //retrieve list of accession numbers for isomers 
+    public String[] getAccession(){  //retrieve list of accession numbers for isomers in reference file
         
         String[] accessionNumber = null;
     
@@ -30,7 +36,7 @@ public class GeneData {
         return accessionNumber; 
     }
 
-    public String getLargest(){
+    public String getLargest(){  //compares all isomers and returns the accession of the largest
         
         String largestIsomer = null;
         
