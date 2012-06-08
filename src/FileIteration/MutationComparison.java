@@ -20,6 +20,7 @@ public class MutationComparison {
    public static void iterateTCGA() throws FileNotFoundException, IOException, BioException{
        
      GeneData name = new GeneData();
+     ExonData exon = new ExonData();
      String filePath = "C:\\Users\\ipurusho.ASURITE\\Desktop\\Mutation files\\refGene_test.txt";
      BufferedReader TSVFile = new BufferedReader(new FileReader(filePath));  
      String str;
@@ -28,7 +29,7 @@ public class MutationComparison {
        
        while((str = TSVFile.readLine())!= null){
        
-      System.out.println(name.getLargest(name.getAccession(name.getName(str))));
+      System.out.println(exon.getExons(name.getLargest(name.getAccession(name.getName(str)))));
        
        }
    }
