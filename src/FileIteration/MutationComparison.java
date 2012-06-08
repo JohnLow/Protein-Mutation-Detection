@@ -28,9 +28,9 @@ public class MutationComparison {
      
        
        while((str = TSVFile.readLine())!= null){
-       
+      System.out.println(name.getLargest(name.getAccession(name.getName(str))));
       System.out.println(exon.getExons(name.getLargest(name.getAccession(name.getName(str)))));
-       
+      
        }
    }
         

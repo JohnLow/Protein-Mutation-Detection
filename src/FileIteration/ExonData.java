@@ -51,7 +51,7 @@ public class ExonData {
                         featureLocation = rf.getLocation().toString(); //Get the location of the feature
                         entrySize = entrySize+1;
                         }
-                 
+                 System.out.println(entrySize);
                  return entrySize;
                  
     }
@@ -170,7 +170,7 @@ public class ExonData {
              
               tempExonSeq = sl.subStr(getStartIndexes(rs)[i], getEndIndexes(rs)[i]);
               nucSeq = nucSeq+ tempExonSeq;
-              i++;
+              
        }
        
         
