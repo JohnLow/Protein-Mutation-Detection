@@ -9,6 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import org.biojava.bio.BioException;
+import org.biojavax.bio.db.ncbi.GenbankRichSequenceDB;
+import org.biojavax.bio.seq.RichSequence;
 
 /**
  *
@@ -51,13 +55,34 @@ public class GeneData {
         return accessionNumber; 
     }
 
-    public String getLargest(){  //compares all isomers and returns the accession of the largest
+    public String getLargest(ArrayList <String> accessionList) throws BioException{  //compares all isomers and returns the accession of the largest
         
         String largestIsomer = null;
+        Iterator iterator = accessionList.iterator();
+        RichSequence rs = null;
+        GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
         
+        int compareLengths[] = new int[accessionList.size()];
         
-        
-        
+        int i = 0;
+        while(iterator.hasNext()){
+            
+             rs = grsdb.getRichSequence(iterator.next().toString());
+             compareLengths[i] = rs.length();
+             i++;
+        }
+        int maxValue = compareLengths[0];
+        for(int j = 0; j < compareLengths.length;j++){
+            if(compareLengths[j] >= maxValue){
+               maxValue = compareLengths[j];
+               largestIsomer = accessionList.get(j);
+            }else if (compareLengths[j]==maxValue){
+                
+                
+            }
+            
+        }
+       
         return largestIsomer;
         
         

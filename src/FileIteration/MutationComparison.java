@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import org.biojava.bio.BioException;
 
 /**
  *
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class MutationComparison {
         
             
-   public static void iterateTCGA() throws FileNotFoundException, IOException{
+   public static void iterateTCGA() throws FileNotFoundException, IOException, BioException{
        
      GeneData name = new GeneData();
      String filePath = "C:\\Users\\ipurusho.ASURITE\\Desktop\\Mutation files\\refGene_test.txt";
@@ -27,15 +28,15 @@ public class MutationComparison {
        
        while((str = TSVFile.readLine())!= null){
        
-        System.out.println(name.getAccession(name.getName(str)));
+      System.out.println(name.getLargest(name.getAccession(name.getName(str))));
        
        }
    }
         
    
-    public static void main(String[] args) throws FileNotFoundException, IOException  {
+    public static void main(String[] args) throws FileNotFoundException, IOException, BioException  {
    
-      
+        
         iterateTCGA();
         
    
