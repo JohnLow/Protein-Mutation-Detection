@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import org.biojava.bio.BioException;
+import org.biojavax.bio.seq.RichSequence;
 
 /**
  *
@@ -21,16 +22,18 @@ public class MutationComparison {
        
      GeneData name = new GeneData();
      ExonData exon = new ExonData();
+     Mutation mutation = new Mutation();
+     RichSequence rs; 
      String filePath = "C:\\Users\\ipurusho.ASURITE\\Desktop\\Mutation files\\refGene_test.txt";
      BufferedReader TSVFile = new BufferedReader(new FileReader(filePath));  
      String str;
      
      
        
-       while((str = TSVFile.readLine())!= null){
-      System.out.println(name.getLargest(name.getAccession(name.getName(str))));
-      System.out.println(exon.getExons(name.getLargest(name.getAccession(name.getName(str)))));
-      
+      while((str = TSVFile.readLine())!= null){
+    // System.out.println(name.getLargest(name.getAccession(name.getGeneData(str))));
+  //    System.out.println(exon.getExons(name.getLargest(name.getAccession(name.getGeneData(str)))));
+      mutation.analyzeGene(name.getLargest(name.getAccession(name.getGeneData(str))),str);
        }
    }
         

@@ -51,8 +51,7 @@ public class ExonData {
                         featureLocation = rf.getLocation().toString(); //Get the location of the feature
                         entrySize = entrySize+1;
                         }
-                 System.out.println(entrySize);
-                 return entrySize;
+                return entrySize;
                  
     }
      

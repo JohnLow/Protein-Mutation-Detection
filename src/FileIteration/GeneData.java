@@ -21,18 +21,26 @@ import org.biojavax.bio.seq.RichSequence;
 public class GeneData {
  
     
-    public String getName(String str1){  //retrieve gene name from TCGA data
+    public String[] getGeneData(String str1){  //retrieve gene name from TCGA data
         
         
+        String[] mutationIndex = new String[4];
         String regex = "[\t]";
         String[] parsedLine = str1.split(regex);
-        String geneName = parsedLine[0];
-        return geneName;
+        
+        mutationIndex[0] = parsedLine[0];  //gene name 
+        mutationIndex[1] = parsedLine[5];  //gene Mutation Location
+        mutationIndex[2] = parsedLine[10]; //Reference nucleotide
+        mutationIndex[3] = parsedLine[12]; //Mutated nucleotide
+        
+       
+        
+        return mutationIndex;
     }
     
     
      
-    public  ArrayList <String>  getAccession(String geneName) throws FileNotFoundException, IOException{  //retrieve list of accession numbers for isomers in reference file
+    public  ArrayList <String>  getAccession(String[] geneName) throws FileNotFoundException, IOException{  //retrieve list of accession numbers for isomers in reference file
         
        
        ArrayList <String> accessionNumber = new ArrayList<String>();
@@ -45,7 +53,7 @@ public class GeneData {
        int i = 0;
        while((str = TSVFile.readLine())!= null){
           String[] row = str.split("[\t]");
-          if(row[12].equals(geneName)){
+          if(row[12].equals(geneName[0])){
            
               accessionNumber.add(row[1]);
           
