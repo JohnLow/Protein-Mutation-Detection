@@ -35,8 +35,13 @@ public class MutationComparison {
    //  System.out.println(exon.getExons(name.getLargest(name.getAccession(name.getGeneData(str)))));
      // mutation.analyzeGene(name.getLargest(name.getAccession(name.getGeneData(str))),str,rs);
           
-         // mutation.exonIndex(str, name.getLargest(name.getAccession(name.getGeneData(str))));
-        exon.absoluteMutationPosition(str, name.getLargest(name.getAccession(name.getGeneData(str))));
+    //      mutation.exonIndex(str, name.getLargest(name.getAccession(name.getGeneData(str))));
+    //  exon.absoluteMutationPosition(str, name.getLargest(name.getAccession(name.getGeneData(str))));
+      //  mutation.convertOriginalToArray(str, name.getLargest(name.getAccession(name.getGeneData(str))));
+          
+          
+         ProteinTranslation protein = new ProteinTranslation();
+        protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))));
        }
    }
         
@@ -44,7 +49,8 @@ public class MutationComparison {
     public static void main(String[] args) throws FileNotFoundException, IOException, BioException  {
    
         
-        iterateTCGA();
+        
+       iterateTCGA();
         
    
    }

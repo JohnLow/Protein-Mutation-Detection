@@ -34,8 +34,8 @@ public class ExonData {
     private RichAnnotation ra;
     
     private String featureLocation;
-   private String[] geneRange = null;
-   private int[] geneIndexes = null;
+    private String[] geneRange = null;
+    private int[] geneIndexes = null;
   
      public  int getEntrySize(RichSequence rs){
               
@@ -247,7 +247,8 @@ public class ExonData {
                              mutationPosition = this.getStartIndexes(rs, this.getExonRange(rs))[mutation.exonIndex(str, isomerAccession)[0]-1] + mutation.exonIndex(str,isomerAccession)[1];
                      //        System.out.println(mutationPosition);
                             // System.out.println(this.getExonRange(rs)[mutation.exonIndex(str, isomerAccession)[0]-1]);
-                             System.out.println(mutationPosition);
+                           
+              //              System.out.println(exon + " " + mutationPosition );
                           //   i++;
                             }
                             }
