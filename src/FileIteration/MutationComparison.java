@@ -23,7 +23,7 @@ public class MutationComparison {
      GeneData name = new GeneData();
      ExonData exon = new ExonData();
      Mutation mutation = new Mutation();
-     RichSequence rs; 
+     RichSequence rs = null; 
      String filePath = "C:\\Users\\ipurusho.ASURITE\\Desktop\\Mutation files\\refGene_test.txt";
      BufferedReader TSVFile = new BufferedReader(new FileReader(filePath));  
      String str;
@@ -32,8 +32,11 @@ public class MutationComparison {
        
       while((str = TSVFile.readLine())!= null){
     // System.out.println(name.getLargest(name.getAccession(name.getGeneData(str))));
-  //    System.out.println(exon.getExons(name.getLargest(name.getAccession(name.getGeneData(str)))));
-      mutation.analyzeGene(name.getLargest(name.getAccession(name.getGeneData(str))),str);
+   //  System.out.println(exon.getExons(name.getLargest(name.getAccession(name.getGeneData(str)))));
+     // mutation.analyzeGene(name.getLargest(name.getAccession(name.getGeneData(str))),str,rs);
+          
+         // mutation.exonIndex(str, name.getLargest(name.getAccession(name.getGeneData(str))));
+        exon.absoluteMutationPosition(str, name.getLargest(name.getAccession(name.getGeneData(str))));
        }
    }
         

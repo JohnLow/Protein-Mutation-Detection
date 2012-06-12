@@ -4,12 +4,15 @@
  */
 package FileIteration;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Iterator;
 import org.biojava.bio.BioException;
 import org.biojava.bio.seq.Feature;
 import org.biojava.bio.seq.FeatureFilter;
 import org.biojava.bio.seq.FeatureHolder;
 import org.biojava.bio.symbol.SymbolList;
+import org.biojavax.Note;
 import org.biojavax.RichAnnotation;
 import org.biojavax.RichObjectFactory;
 import org.biojavax.bio.db.ncbi.GenbankRichSequenceDB;
@@ -77,8 +80,8 @@ public class ExonData {
      
    }
     
+    /* ==============================================This has been modified!================================================
       public int[] getStartIndexes(RichSequence rs){
-        
         
         getExonRange(rs);
         geneIndexes = new int[this.getEntrySize(rs)]; 
@@ -91,7 +94,7 @@ public class ExonData {
         for (int i = 0; i < this.getEntrySize(rs); i++){
           
             String[] parsedString = new String[15];
-            parsedString = geneRange[i].split(delimeter);
+            parsedString = geneRange[i].split(delimeter);//geneRange[i].split(delimeter);
             int k = 0;
             for (int j = 0; j < parsedString.length ; j++){
                 
@@ -112,7 +115,42 @@ public class ExonData {
       
         return geneIndexes;
     }
-    
+    */
+    public int[] getStartIndexes(RichSequence rs, String[] exonInput ){
+        
+        
+        
+        geneIndexes = new int[this.getEntrySize(rs)]; 
+        
+        String delimeter ="[\\.\\.\\>\\<]";//"[\\>\\<\\.\\.]";
+        String[] useableIndex = new String[3];
+        
+       
+       try{
+        for (int i = 0; i < this.getEntrySize(rs); i++){
+          
+            String[] parsedString = new String[15];
+            parsedString = exonInput[i].split(delimeter);//geneRange[i].split(delimeter);
+            int k = 0;
+            for (int j = 0; j < parsedString.length ; j++){
+                
+                if(parsedString[j].equals("")){}
+                else{
+                    useableIndex[k] = parsedString[j];
+                    k++;
+                 }
+                  
+            }
+            geneIndexes[i] = Integer.parseInt(useableIndex[0]);
+            
+            
+        }
+      }catch(Exception e){
+          System.out.println("Gene Locations are not in proper format");
+      }
+      
+        return geneIndexes;
+    }
     
     
     public int[] getEndIndexes(RichSequence rs){
@@ -167,7 +205,7 @@ public class ExonData {
         this.getExonRange(rs);
         for (int i =0; i < this.getEntrySize(rs); i++){
              
-              tempExonSeq = sl.subStr(getStartIndexes(rs)[i], getEndIndexes(rs)[i]);
+              tempExonSeq = sl.subStr(getStartIndexes(rs,this.getExonRange(rs))[i], getEndIndexes(rs)[i]);
               nucSeq = nucSeq+ tempExonSeq;
               
        }
@@ -176,7 +214,46 @@ public class ExonData {
         return nucSeq;
     }
     
-    
-    
+           public int absoluteMutationPosition(String str, String isomerAccession) throws FileNotFoundException, IOException, BioException{ //works as expected. Certain Strains have country annotation.
+                
+             //Filter the sequence on CDS features
+             Mutation mutation = new Mutation();
+             int mutationPosition = 0;          
+             
+             RichSequence rs = null;
+             GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
+             rs = grsdb.getRichSequence(isomerAccession);
+             String exon = Integer.toString(mutation.exonIndex(str, isomerAccession)[0]);
+            
+             
+             ff = new FeatureFilter.ByType("exon");
+             fh = rs.filter(ff);
+                 int i = 0;
+                //Iterate through the CDS features
+                for (Iterator <Feature> is = fh.features(); is.hasNext();){
+                        ComparableTerm exonNumber = RichObjectFactory.getDefaultOntology().getOrCreateTerm("number");
+                        rf = (RichFeature)is.next();
+                        //Get the annotation of the feature
+                        ra = (RichAnnotation)rf.getAnnotation();
+                       
+                        //Iterate through the notes in the annotation
+                        for (Iterator <Note> it = ra.getNoteSet().iterator(); it.hasNext();){
+                            Note note = it.next();
+                            
+                            //Check each note to see if it matches one of the required ComparableTerms
+                            if(note.getTerm().equals(exonNumber)){
+                          if(note.getValue().toString().equals(exon)){
+                               
+                             mutationPosition = this.getStartIndexes(rs, this.getExonRange(rs))[0] + mutation.exonIndex(str,isomerAccession)[1];
+                             System.out.println(mutationPosition);
+                            }
+                            }
+   
+                        }
+          
+             }return mutationPosition;
+          
+ }
+
     
 }
