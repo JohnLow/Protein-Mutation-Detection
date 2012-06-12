@@ -111,13 +111,13 @@ public class Mutation {
     
     
     
-    public char[] convertOriginalToArray(String str, String isomerAccession) throws BioException, FileNotFoundException, IOException{  
+    public String convertOriginalToArray(String str, String isomerAccession) throws BioException, FileNotFoundException, IOException{  
         
         
        
         String nucleicSeq = exon.getExons(isomerAccession); //original nucleotide sequence of exons
 
-        char[] iterateSeq = nucleicSeq.toCharArray();
+       // char[] iterateSeq = nucleicSeq.toCharArray();
    
      //  System.out.println(isomerAccession);
      //  for (int i = 0; i<iterateSeq.length; i++){
@@ -125,13 +125,13 @@ public class Mutation {
      //  }
          
        
-        return iterateSeq; //returns a char array with mutation
+        return nucleicSeq; //returns a char array with mutation
         
     }
     
     
     
-    public char[] convertMutatedToArray(String str, String isomerAccession) throws BioException, FileNotFoundException, IOException{ 
+    public String convertMutatedToArray(String str, String isomerAccession) throws BioException, FileNotFoundException, IOException{ 
         
         
         String nucleicSeq = exon.getExons(isomerAccession);
@@ -147,8 +147,8 @@ public class Mutation {
         //    System.out.print(iterateSeq);
         //    }
        //     }
-        
-        return iterateSeq;
+        nucleicSeq = new String(iterateSeq);
+        return nucleicSeq;
         
     }
     

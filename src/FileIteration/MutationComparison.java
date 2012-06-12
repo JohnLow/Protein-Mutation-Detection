@@ -42,6 +42,10 @@ public class MutationComparison {
           
          ProteinTranslation protein = new ProteinTranslation();
         protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))));
+        System.out.println( protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[0] + " " +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[1] + " " +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[2]);
+        
+        
+        
        }
    }
         

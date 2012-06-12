@@ -29,22 +29,23 @@ public class ProteinTranslation {
         TranscriptionEngine engine = b.build();
         
     Mutation mutation = new Mutation();
-    int proteinLength = mutation.convertOriginalToArray(str, isomerAccession).length;   
+   // int proteinLength = mutation.convertOriginalToArray(str, isomerAccession).length;   
     ArrayList <String> proteinArray = new ArrayList<String>();
    
-
-    for(int i = 0; i < proteinLength; i++){
+    String[] codon = mutation.convertOriginalToArray(str, isomerAccession).split("(?<=\\G...)");
+    
+   for(int i = 0; i < codon.length; i++){
     
   //  String temp = Character.toString(mutation.convertOriginalToArray(str, isomerAccession)[i]);
    // temp = temp + Character.toString(mutation.convertOriginalToArray(str, isomerAccession)[i+1]);
   //  temp = temp +  Character.toString(mutation.convertOriginalToArray(str, isomerAccession)[i+2]);
     
     
-    DNASequence dna = new DNASequence("ATG");
+    DNASequence dna = new DNASequence(codon[i]);
     RNASequence rna = dna.getRNASequence(engine);
     ProteinSequence protein = rna.getProteinSequence(engine);
     proteinArray.add(protein.toString());
-    }
+  }
     
  return proteinArray;
 
@@ -59,23 +60,20 @@ public class ProteinTranslation {
         TranscriptionEngine engine = b.build();
   
     Mutation mutation = new Mutation();
-    int proteinLength = mutation.convertMutatedToArray(str, isomerAccession).length;   
+    
     
      ArrayList <String> proteinArray = new ArrayList<String>();
+     String[] codon = mutation.convertMutatedToArray(str, isomerAccession).split("(?<=\\G...)");
    
-   
-    for(int i = 0; i < proteinLength; i++){
+    for(int i = 0; i < codon.length; i++){
     
    // String temp = Character.toString(mutation.convertMutatedToArray(str, isomerAccession)[i]);
    // temp = temp + Character.toString(mutation.convertMutatedToArray(str, isomerAccession)[i+1]);
    // temp = temp +  Character.toString(mutation.convertMutatedToArray(str, isomerAccession)[i+2]);
     
-    DNASequence dna = new DNASequence("ATT");
+    DNASequence dna = new DNASequence(codon[i]);
     RNASequence rna = dna.getRNASequence(engine);
     ProteinSequence protein = rna.getProteinSequence(engine);
-    
-    
- //   protein = new DNASequence(temp).getRNASequence().getProteinSequence();
     proteinArray.add(protein.toString());
     
     }
@@ -104,6 +102,7 @@ public class ProteinTranslation {
                   originalAndMutated[0] = iterator1.next().toString();
                   originalAndMutated[1] = iterator2.next().toString();
                   originalAndMutated[2] = Integer.toString(i);
+                  
               }i++;
               
               
