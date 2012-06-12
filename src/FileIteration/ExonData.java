@@ -244,11 +244,14 @@ public class ExonData {
                             if(note.getTerm().equals(exonNumber)){
                           if(note.getValue().toString().equals(exon)){
                                
-                             mutationPosition = this.getStartIndexes(rs, this.getExonRange(rs))[0] + mutation.exonIndex(str,isomerAccession)[1];
+                             mutationPosition = this.getStartIndexes(rs, this.getExonRange(rs))[mutation.exonIndex(str, isomerAccession)[0]-1] + mutation.exonIndex(str,isomerAccession)[1];
+                     //        System.out.println(mutationPosition);
+                            // System.out.println(this.getExonRange(rs)[mutation.exonIndex(str, isomerAccession)[0]-1]);
                              System.out.println(mutationPosition);
+                          //   i++;
                             }
                             }
-   
+                                
                         }
           
              }return mutationPosition;
