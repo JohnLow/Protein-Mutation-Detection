@@ -36,9 +36,9 @@ public class Mutation {
           String[] row = str.split("[\t]");
           if(row[1].equals(isomerAccession)){
        
-           String[] newString =   row[9].split("[\"]");
+           String[] newString = row[9].split("[\"]");
               
-              String[] tempStart = newString[1].split("[\\,]");
+              String[] tempStart = newString[0].split("[\\,]");
               exonStart = new int[tempStart.length];
               for (int j = 0; j<tempStart.length; j++){
                   
@@ -68,7 +68,7 @@ public class Mutation {
           if(row[1].equals(isomerAccession)){
            String[] newString =   row[10].split("[\"]");
               
-              String[] tempStart = newString[1].split("[\\,]");
+              String[] tempStart = newString[0].split("[\\,]");
               exonEnd = new int[tempStart.length];
               for (int j = 0; j<tempStart.length; j++){
                   
@@ -214,22 +214,22 @@ public String forwardOrReverse(String isomerAccession) throws FileNotFoundExcept
            
            
            char mutationNuc = gene.getGeneData(str)[3].toCharArray()[0];
-           char mutationNuc1 = ' ';
+           
            if(mutationNuc == 'g'){
-               mutationNuc1 = 'c';
+               mutationNuc = 'c';
            }
             if(mutationNuc == 't'){
-               mutationNuc1 = 'a';
+               mutationNuc = 'a';
            }
             if(mutationNuc == 'a'){
-               mutationNuc1 = 't';
+               mutationNuc = 't';
            }
             if(mutationNuc == 'c'){
-               mutationNuc1 = 'g';
+               mutationNuc = 'g';
            }
            
            
-           iterateSeq[index] = mutationNuc1; //gene.getGeneData(str)[3].toCharArray()[0];
+           iterateSeq[index] = mutationNuc; //gene.getGeneData(str)[3].toCharArray()[0];
            
      //    int start = rs.length()-exon.getEndIndexes(rs,exon.getCDSRange(rs))[0]-1;
        //  int end = rs.length() - exon.getStartIndexes(rs, exon.getCDSRange(rs))[0]-1;

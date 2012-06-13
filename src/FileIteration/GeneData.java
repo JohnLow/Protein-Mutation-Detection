@@ -70,8 +70,10 @@ public class GeneData {
         RichSequence rs = null;
         GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
         
-        int compareLengths[] = new int[accessionList.size()];
         
+        try{
+        int compareLengths[] = new int[accessionList.size()];
+      
         int i = 0;
         while(iterator.hasNext()){
             
@@ -90,7 +92,12 @@ public class GeneData {
             }
             
         }
-        
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            largestIsomer = null;
+            System.out.println("not available");
+        }
+       
         return largestIsomer;
         
         

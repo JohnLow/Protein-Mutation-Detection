@@ -28,7 +28,7 @@ public class MutationComparison {
      BufferedReader TSVFile = new BufferedReader(new FileReader(filePath));  
      String str;
      
-     
+     ProteinTranslation protein = new ProteinTranslation();
        
       while((str = TSVFile.readLine())!= null){
     // System.out.println(name.getLargest(name.getAccession(name.getGeneData(str))));
@@ -38,13 +38,13 @@ public class MutationComparison {
     //      mutation.exonIndex(str, name.getLargest(name.getAccession(name.getGeneData(str))));
     //  exon.absoluteMutationPosition(str, name.getLargest(name.getAccession(name.getGeneData(str))));
       //  mutation.convertOriginalToArray(str, name.getLargest(name.getAccession(name.getGeneData(str))));
-                                  
+      if(name.getLargest(name.getAccession(name.getGeneData(str)))!= null){                           
           
-         ProteinTranslation protein = new ProteinTranslation();
+         
      //    protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))));
-       System.out.println(protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[0] + " " +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[1] + " " +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[2]);
+       System.out.println(name.getGeneData(str)[0] +"\t"+ name.getLargest(name.getAccession(name.getGeneData(str))) +"\t" + protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[0] + "\t" +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[1] + "\t" +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[2]);
         // protein.translatedOriginal(str, name.getLargest(name.getAccession(name.getGeneData(str))));
-        
+      }
         
        }
    }

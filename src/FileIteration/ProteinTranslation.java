@@ -47,8 +47,8 @@ public class ProteinTranslation {
     proteinArray.add(protein.toString());
     
   }
-    
- return proteinArray;
+      String test = proteinArray.toString();
+     return proteinArray;
 
     
     }
@@ -78,7 +78,7 @@ public class ProteinTranslation {
     proteinArray.add(protein.toString());
     
     }
-    
+  
     return proteinArray;
 
     }
