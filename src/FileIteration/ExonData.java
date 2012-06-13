@@ -267,39 +267,49 @@ public class ExonData {
              RichSequence rs = null;
              GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
              rs = grsdb.getRichSequence(isomerAccession);
-             String exon = Integer.toString(mutation.exonIndex(str, isomerAccession)[0]);
-            
              
-             ff = new FeatureFilter.ByType("exon");
-             fh = rs.filter(ff);
-                 int i = 0;
+             int exon1 = mutation.exonIndex(str, isomerAccession)[0];
+             
+            
+            int[] yo = this.getStartIndexes(rs, this.getExonRange(rs));
+             
                 //Iterate through the CDS features
-                for (Iterator <Feature> is = fh.features(); is.hasNext();){
-                        ComparableTerm exonNumber = RichObjectFactory.getDefaultOntology().getOrCreateTerm("number");
-                        rf = (RichFeature)is.next();
+            //    for (Iterator <Feature> is = fh.features(); is.hasNext();){
+                     //   ComparableTerm exonNumber = RichObjectFactory.getDefaultOntology().getOrCreateTerm("number");
+                  //      rf = (RichFeature)is.next();
                         //Get the annotation of the feature
-                        ra = (RichAnnotation)rf.getAnnotation();
+                  //    ra = (RichAnnotation)rf.getAnnotation();
                        
                         //Iterate through the notes in the annotation
-                        for (Iterator <Note> it = ra.getNoteSet().iterator(); it.hasNext();){
-                            Note note = it.next();
+                 //       for (Iterator <Note> it = ra.getNoteSet().iterator(); it.hasNext();){
+                   //         Note note = it.next();
                             
                             //Check each note to see if it matches one of the required ComparableTerms
-                            if(note.getTerm().equals(exonNumber)){
-                          if(note.getValue().toString().equals(exon)){
+                  //          if(note.getTerm().equals(exonNumber)){
+                 //         if(note.getValue().toString().equals(exon)){
                                
-                             mutationPosition = this.getStartIndexes(rs, this.getExonRange(rs))[mutation.exonIndex(str, isomerAccession)[0]-1] + mutation.exonIndex(str,isomerAccession)[1];
+                          if(mutation.forwardOrReverse(isomerAccession).equals("+")){    
+                              int absolutePos = this.getStartIndexes(rs, this.getExonRange(rs))[exon1-1];
+                             mutationPosition =  absolutePos + mutation.exonIndex(str,isomerAccession)[1]-1;
+                             
+                          }
+                          
+                          if(mutation.forwardOrReverse(isomerAccession).equals("-")){ 
+                               int absolutePos = this.getStartIndexes(rs, this.getExonRange(rs))[exon1-1];
+                               mutationPosition =  absolutePos + mutation.exonIndex(str,isomerAccession)[1]-1;
+                          }
                      //        System.out.println(mutationPosition);
                             // System.out.println(this.getExonRange(rs)[mutation.exonIndex(str, isomerAccession)[0]-1]);
                            
-                 //          System.out.println(exon + " " + mutationPosition);
+                     //     System.out.println(exon1 + " " + mutationPosition);
                           //   i++;
-                            }
-                            }
+                        //    }
+                          //  }
                                 
-                        }
+                     //   }
           
-             }return mutationPosition;
+            // }
+  return mutationPosition;
           
  }
 

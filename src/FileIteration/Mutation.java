@@ -81,25 +81,28 @@ public class Mutation {
        return exonEnd; 
     }
     
-      public String forwardOrReverse(String isomerAccession) throws FileNotFoundException, IOException{ //gets range for exon: END (obviously)
+public String forwardOrReverse(String isomerAccession) throws FileNotFoundException, IOException{ //gets range for exon: END (obviously)
         
        String direction = null;
        String filePath = "C:\\Users\\ipurusho.ASURITE\\Desktop\\Mutation files\\test_TCGA.txt";
-       BufferedReader TSVFile = new BufferedReader(new FileReader(filePath));  
+       BufferedReader TSVFile = new BufferedReader(new FileReader(filePath));
        String str;
        
        int i = 0;
        
        while((str = TSVFile.readLine())!= null){
           String[] row = str.split("[\t]");
-        
-          direction = row[3];
-          
+        if(row[1].equals(isomerAccession)){
+                
+            direction = row[3];
+        }
        }
        
    
-       return direction; 
+       return direction;
     }
+
+
 
     public int[] exonIndex(String str, String isomerAccession) throws FileNotFoundException, IOException{ //Method to find where the mutation exists relative to the method
         
@@ -114,21 +117,23 @@ public class Mutation {
         for(int i = 0; i<numberOfExons; i++){
             
             if(mutationIndex >= this.getExonStart(isomerAccession)[i] && mutationIndex <= this.getExonEnd(isomerAccession)[i]){
-                
-               if(this.forwardOrReverse(isomerAccession).equals("+")){
+               
+             if(this.forwardOrReverse(isomerAccession).equals("+")){
                 exonNumber[0] = i+1; //exon number (correspoinding to GenBank entry)
                 exonNumber[1] =  mutationIndex - this.getExonStart(isomerAccession)[i]; //relative position in that specific exon
-               }
-     //     System.out.println(exonNumber[0] + " " + exonNumber[1] + " " + gene.getGeneData(str)[2]);
-               if(this.forwardOrReverse(isomerAccession).equals("-")){
+             }
+      
+              if(this.forwardOrReverse(isomerAccession).equals("-")){
                 exonNumber[0] = numberOfExons -(i); //exon number (correspoinding to GenBank entry)
-                exonNumber[1] =  mutationIndex - this.getExonStart(isomerAccession)[i];//relative position in that specific exon
+               exonNumber[1] = this.getExonEnd(isomerAccession)[i]-mutationIndex;//relative position in that specific exon
                }
             }
             
-           
+            
         }
-     //   System.out.println(exonNumber[1]);
+        
+     //    System.out.println(exonNumber[0] + " " + exonNumber[1] + " " + gene.getGeneData(str)[2]);
+     //  System.out.println(exonNumber[1]);
     return exonNumber;
     }
     
