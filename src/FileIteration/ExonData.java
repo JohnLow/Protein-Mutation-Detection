@@ -296,12 +296,12 @@ public class ExonData {
                           
                           if(mutation.forwardOrReverse(isomerAccession).equals("-")){ 
                                int absolutePos = this.getStartIndexes(rs, this.getExonRange(rs))[exon1-1];
-                               mutationPosition =  absolutePos + mutation.exonIndex(str,isomerAccession)[1]-1;
+                               mutationPosition =  absolutePos + mutation.exonIndex(str,isomerAccession)[1];
                           }
                      //        System.out.println(mutationPosition);
                             // System.out.println(this.getExonRange(rs)[mutation.exonIndex(str, isomerAccession)[0]-1]);
                            
-                     //     System.out.println(exon1 + " " + mutationPosition);
+                          System.out.println(exon1 + " " + mutationPosition);
                           //   i++;
                         //    }
                           //  }

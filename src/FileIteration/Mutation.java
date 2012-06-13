@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import org.biojava.bio.BioException;
+import org.biojava.bio.seq.DNATools;
+import org.biojava.bio.symbol.SymbolList;
 import org.biojavax.bio.db.ncbi.GenbankRichSequenceDB;
 import org.biojavax.bio.seq.RichSequence;
 
@@ -132,7 +134,7 @@ public String forwardOrReverse(String isomerAccession) throws FileNotFoundExcept
             
         }
         
-     //    System.out.println(exonNumber[0] + " " + exonNumber[1] + " " + gene.getGeneData(str)[2]);
+        System.out.println(exonNumber[0] + " " + exonNumber[1] + " " + gene.getGeneData(str)[2]);
      //  System.out.println(exonNumber[1]);
     return exonNumber;
     }
@@ -163,23 +165,44 @@ public String forwardOrReverse(String isomerAccession) throws FileNotFoundExcept
     
     public String convertMutatedToArray(String str, String isomerAccession) throws BioException, FileNotFoundException, IOException{ 
         
-        
+       Mutation mutation = new Mutation();
        String nucleicSeq = exon.getExons(isomerAccession);
-      
-       char[] iterateSeq = nucleicSeq.toCharArray();
-      
        RichSequence rs = null;
        GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
        rs = grsdb.getRichSequence(isomerAccession);
-        
-       iterateSeq[exon.absoluteMutationPosition(str, isomerAccession)-1] = gene.getGeneData(str)[3].toCharArray()[0];
-      // int arrayLength =  exon.getEndIndexes(rs,exon.getCDSRange(rs))[0] - exon.getStartIndexes(rs, exon.getCDSRange(rs))[0];
        String finalMutant ="";
-       for(int i = exon.getStartIndexes(rs, exon.getCDSRange(rs))[0]-1; i <= exon.getEndIndexes(rs,exon.getCDSRange(rs))[0]-1 ;i++ ){
-       
-       finalMutant = finalMutant + iterateSeq[i];
-        
+      
+        if(mutation.forwardOrReverse(isomerAccession).equals("+")){
+         int index = exon.absoluteMutationPosition(str, isomerAccession)-1;
+         char[] iterateSeq = nucleicSeq.toCharArray();
+         
+         iterateSeq[index] = gene.getGeneData(str)[3].toCharArray()[0];
+         for(int i = exon.getStartIndexes(rs, exon.getCDSRange(rs))[0]-1; i <= exon.getEndIndexes(rs,exon.getCDSRange(rs))[0]-1 ;i++ ){
+         finalMutant = finalMutant + iterateSeq[i];
+         }
        }
+       
+       
+       
+       
+       if(mutation.forwardOrReverse(isomerAccession).equals("-")){
+           SymbolList symL = DNATools.createDNA(nucleicSeq);
+           symL = DNATools.reverseComplement(symL);
+           nucleicSeq = symL.seqString();
+           
+           int index = exon.getEndIndexes(rs, exon.getExonRange(rs))[exon.getEndIndexes(rs, exon.getExonRange(rs)).length-1] - exon.absoluteMutationPosition(str, isomerAccession);
+           
+           char[] iterateSeq = nucleicSeq.toCharArray();
+           iterateSeq[index] = gene.getGeneData(str)[3].toCharArray()[0];
+           for(int i = exon.getStartIndexes(rs, exon.getCDSRange(rs))[0]-1; i <= exon.getEndIndexes(rs,exon.getCDSRange(rs))[0]-1 ;i++ ){
+           finalMutant = finalMutant + iterateSeq[i];
+          }
+           
+           
+       }
+        
+      
+   
         
         
         return finalMutant;
