@@ -80,6 +80,26 @@ public class Mutation {
    
        return exonEnd; 
     }
+    
+      public String forwardOrReverse(String isomerAccession) throws FileNotFoundException, IOException{ //gets range for exon: END (obviously)
+        
+       String direction = null;
+       String filePath = "C:\\Users\\ipurusho.ASURITE\\Desktop\\Mutation files\\test_TCGA.txt";
+       BufferedReader TSVFile = new BufferedReader(new FileReader(filePath));  
+       String str;
+       
+       int i = 0;
+       
+       while((str = TSVFile.readLine())!= null){
+          String[] row = str.split("[\t]");
+        
+          direction = row[3];
+          
+       }
+       
+   
+       return direction; 
+    }
 
     public int[] exonIndex(String str, String isomerAccession) throws FileNotFoundException, IOException{ //Method to find where the mutation exists relative to the method
         
@@ -95,15 +115,20 @@ public class Mutation {
             
             if(mutationIndex >= this.getExonStart(isomerAccession)[i] && mutationIndex <= this.getExonEnd(isomerAccession)[i]){
                 
+               if(this.forwardOrReverse(isomerAccession).equals("+")){
                 exonNumber[0] = i+1; //exon number (correspoinding to GenBank entry)
-                exonNumber[1] =  mutationIndex - this.getExonStart(isomerAccession)[i] ; //relative position in that specific exon
-                
+                exonNumber[1] =  mutationIndex - this.getExonStart(isomerAccession)[i]; //relative position in that specific exon
+               }
      //     System.out.println(exonNumber[0] + " " + exonNumber[1] + " " + gene.getGeneData(str)[2]);
-               
+               if(this.forwardOrReverse(isomerAccession).equals("-")){
+                exonNumber[0] = numberOfExons -(i); //exon number (correspoinding to GenBank entry)
+                exonNumber[1] =  mutationIndex - this.getExonStart(isomerAccession)[i];//relative position in that specific exon
+               }
             }
-             
+            
            
         }
+     //   System.out.println(exonNumber[1]);
     return exonNumber;
     }
     
@@ -115,7 +140,7 @@ public class Mutation {
         
         
        
-        String nucleicSeq = exon.getExons(isomerAccession); //original nucleotide sequence of exons
+        String nucleicSeq = exon.getCDS(isomerAccession); //original nucleotide sequence of exons
 
        // char[] iterateSeq = nucleicSeq.toCharArray();
    
@@ -128,27 +153,31 @@ public class Mutation {
         return nucleicSeq; //returns a char array with mutation
         
     }
-    
+   
     
     
     public String convertMutatedToArray(String str, String isomerAccession) throws BioException, FileNotFoundException, IOException{ 
         
         
-        String nucleicSeq = exon.getExons(isomerAccession);
-        char[] iterateSeq = nucleicSeq.toCharArray();
+       String nucleicSeq = exon.getExons(isomerAccession);
+      
+       char[] iterateSeq = nucleicSeq.toCharArray();
+      
+       RichSequence rs = null;
+       GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
+       rs = grsdb.getRichSequence(isomerAccession);
         
-        iterateSeq[exon.absoluteMutationPosition(str, isomerAccession)-1] = gene.getGeneData(str)[3].toCharArray()[0];
-    //    for(int i = 0; i<iterateSeq.length; i++){
-         //   System.out.println(iterateSeq[exon.absoluteMutationPosition(str, isomerAccession)]);
-        //    if(gene.getGeneData(str)[2].equals(iterateSeq[exon.absoluteMutationPosition(str, isomerAccession)])){
-      //      iterateSeq[exon.absoluteMutationPosition(str, isomerAccession)] = gene.getGeneData(str)[3].toCharArray()[0];
-       //     System.out.println(iterateSeq[exon.absoluteMutationPosition(str, isomerAccession)]);
-       //     System.out.println(isomerAccession);
-        //    System.out.print(iterateSeq);
-        //    }
-       //     }
-        nucleicSeq = new String(iterateSeq);
-        return nucleicSeq;
+       iterateSeq[exon.absoluteMutationPosition(str, isomerAccession)-1] = gene.getGeneData(str)[3].toCharArray()[0];
+      // int arrayLength =  exon.getEndIndexes(rs,exon.getCDSRange(rs))[0] - exon.getStartIndexes(rs, exon.getCDSRange(rs))[0];
+       String finalMutant ="";
+       for(int i = exon.getStartIndexes(rs, exon.getCDSRange(rs))[0]-1; i <= exon.getEndIndexes(rs,exon.getCDSRange(rs))[0]-1 ;i++ ){
+       
+       finalMutant = finalMutant + iterateSeq[i];
+        
+       }
+        
+        
+        return finalMutant;
         
     }
     

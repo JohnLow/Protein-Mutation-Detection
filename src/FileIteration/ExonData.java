@@ -80,6 +80,29 @@ public class ExonData {
      
    }
     
+    
+       
+    public String[] getCDSRange(RichSequence rs){
+    
+     geneRange = new String[this.getEntrySize(rs)];
+     ff = new FeatureFilter.ByType("CDS");
+             fh = rs.filter(ff);
+                int i = 0;
+                //Iterate through the CDS features
+                for (Iterator <Feature> is = fh.features(); is.hasNext();){
+                    
+                        rf = (RichFeature)is.next();
+                        //Get the annotation of the feature
+                        ra = (RichAnnotation)rf.getAnnotation();
+                        featureLocation = rf.getLocation().toString();
+                        geneRange[i] = featureLocation;
+                        i++;
+                
+                }
+    return geneRange;
+     
+   }
+    
     /* ==============================================This has been modified!================================================
       public int[] getStartIndexes(RichSequence rs){
         
@@ -146,14 +169,14 @@ public class ExonData {
             
         }
       }catch(Exception e){
-          System.out.println("Gene Locations are not in proper format");
+       //   System.out.println("Gene Locations are not in proper format");
       }
       
         return geneIndexes;
     }
     
     
-    public int[] getEndIndexes(RichSequence rs){
+    public int[] getEndIndexes(RichSequence rs,String[] exonInput){
         
         
         getExonRange(rs);
@@ -166,7 +189,7 @@ public class ExonData {
        try{
         for (int i = 0; i < this.getEntrySize(rs); i++){
           
-            String[] parsedString = geneRange[i].split(delimeter);
+            String[] parsedString = exonInput[i].split(delimeter);
             int k = 0;
             for (int j = 0; j < parsedString.length ; j++){
                 
@@ -183,7 +206,7 @@ public class ExonData {
         }
       }catch(Exception e){
           
-          System.out.println("Gene Locations are not in proper format");
+        //  System.out.println("Gene Locations are not in proper format");
       }
         
         return geneIndexes;
@@ -205,7 +228,7 @@ public class ExonData {
         this.getExonRange(rs);
         for (int i =0; i < this.getEntrySize(rs); i++){
              
-              tempExonSeq = sl.subStr(getStartIndexes(rs,this.getExonRange(rs))[i], getEndIndexes(rs)[i]);
+              tempExonSeq = sl.subStr(getStartIndexes(rs,this.getExonRange(rs))[i], getEndIndexes(rs,this.getExonRange(rs))[i]);
               nucSeq = nucSeq+ tempExonSeq;
               
        }
@@ -214,6 +237,27 @@ public class ExonData {
         return nucSeq;
     }
     
+    public String getCDS(String isomerAccession) throws BioException{
+        
+        String nucSeq ="";
+        String tempExonSeq = null;
+        SymbolList sl;
+        RichSequence rs = null;
+        GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
+        
+        rs = grsdb.getRichSequence(isomerAccession);
+        sl = rs.getInternalSymbolList(); 
+        this.getExonRange(rs);
+     //   for (int i =0; i < this.getEntrySize(rs); i++){
+             
+              tempExonSeq = sl.subStr(getStartIndexes(rs,this.getCDSRange(rs))[0], getEndIndexes(rs,this.getCDSRange(rs))[0]);
+              nucSeq = tempExonSeq;
+              
+     //  }
+       
+        
+        return nucSeq;
+    }
            public int absoluteMutationPosition(String str, String isomerAccession) throws FileNotFoundException, IOException, BioException{ //works as expected. Certain Strains have country annotation.
                 
              //Filter the sequence on CDS features
@@ -248,7 +292,7 @@ public class ExonData {
                      //        System.out.println(mutationPosition);
                             // System.out.println(this.getExonRange(rs)[mutation.exonIndex(str, isomerAccession)[0]-1]);
                            
-              //              System.out.println(exon + " " + mutationPosition );
+                 //          System.out.println(exon + " " + mutationPosition);
                           //   i++;
                             }
                             }

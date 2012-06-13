@@ -36,14 +36,14 @@ public class MutationComparison {
      // mutation.analyzeGene(name.getLargest(name.getAccession(name.getGeneData(str))),str,rs);
           
     //      mutation.exonIndex(str, name.getLargest(name.getAccession(name.getGeneData(str))));
-    //  exon.absoluteMutationPosition(str, name.getLargest(name.getAccession(name.getGeneData(str))));
+ //     exon.absoluteMutationPosition(str, name.getLargest(name.getAccession(name.getGeneData(str))));
       //  mutation.convertOriginalToArray(str, name.getLargest(name.getAccession(name.getGeneData(str))));
-          
+                                  
           
          ProteinTranslation protein = new ProteinTranslation();
-        protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))));
-        System.out.println( protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[0] + " " +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[1] + " " +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[2]);
-        
+        // protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))));
+        System.out.println(protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[0] + " " +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[1] + " " +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[2]);
+        // protein.translatedOriginal(str, name.getLargest(name.getAccession(name.getGeneData(str))));
         
         
        }

@@ -63,7 +63,7 @@ public class GeneData {
         return accessionNumber; 
     }
 
-    public String getLargest(ArrayList <String> accessionList) throws BioException{  //compares all isomers and returns the accession of the largest
+    public String getLargest(ArrayList <String> accessionList) throws BioException {  //compares all isomers and returns the accession of the largest
         
         String largestIsomer = null;
         Iterator iterator = accessionList.iterator();
@@ -90,7 +90,7 @@ public class GeneData {
             }
             
         }
-       
+        
         return largestIsomer;
         
         

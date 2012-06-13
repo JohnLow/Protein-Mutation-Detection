@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 package FileIteration;
 
 import java.io.FileNotFoundException;
@@ -15,9 +15,9 @@ import org.biojava3.core.sequence.RNASequence;
 import org.biojava3.core.sequence.transcription.TranscriptionEngine;
 
 /**
- *
- * @author ipurusho
- */
+*
+* @author ipurusho
+*/
 public class ProteinTranslation {
     
    
@@ -29,22 +29,23 @@ public class ProteinTranslation {
         TranscriptionEngine engine = b.build();
         
     Mutation mutation = new Mutation();
-   // int proteinLength = mutation.convertOriginalToArray(str, isomerAccession).length;   
+   // int proteinLength = mutation.convertOriginalToArray(str, isomerAccession).length;
     ArrayList <String> proteinArray = new ArrayList<String>();
    
     String[] codon = mutation.convertOriginalToArray(str, isomerAccession).split("(?<=\\G...)");
     
    for(int i = 0; i < codon.length; i++){
     
-  //  String temp = Character.toString(mutation.convertOriginalToArray(str, isomerAccession)[i]);
+  // String temp = Character.toString(mutation.convertOriginalToArray(str, isomerAccession)[i]);
    // temp = temp + Character.toString(mutation.convertOriginalToArray(str, isomerAccession)[i+1]);
-  //  temp = temp +  Character.toString(mutation.convertOriginalToArray(str, isomerAccession)[i+2]);
+  // temp = temp + Character.toString(mutation.convertOriginalToArray(str, isomerAccession)[i+2]);
     
     
     DNASequence dna = new DNASequence(codon[i]);
     RNASequence rna = dna.getRNASequence(engine);
     ProteinSequence protein = rna.getProteinSequence(engine);
     proteinArray.add(protein.toString());
+    
   }
     
  return proteinArray;
@@ -69,7 +70,7 @@ public class ProteinTranslation {
     
    // String temp = Character.toString(mutation.convertMutatedToArray(str, isomerAccession)[i]);
    // temp = temp + Character.toString(mutation.convertMutatedToArray(str, isomerAccession)[i+1]);
-   // temp = temp +  Character.toString(mutation.convertMutatedToArray(str, isomerAccession)[i+2]);
+   // temp = temp + Character.toString(mutation.convertMutatedToArray(str, isomerAccession)[i+2]);
     
     DNASequence dna = new DNASequence(codon[i]);
     RNASequence rna = dna.getRNASequence(engine);
@@ -85,31 +86,31 @@ public class ProteinTranslation {
     public String[] proteinComparison(String str, String isomerAccession) throws BioException, FileNotFoundException, IOException{
         
         String[] originalAndMutated = new String[3];
-       ArrayList <String> translatedOriginal = this.translatedOriginal(str, isomerAccession);
+        ArrayList <String> translatedOriginal = this.translatedOriginal(str, isomerAccession);
         ArrayList <String> translatedMutated = this.translatedMutated(str, isomerAccession);
         
        
         
-       Iterator iterator1 = translatedOriginal.iterator();
+        Iterator iterator1 = translatedOriginal.iterator();
         Iterator iterator2 = translatedMutated.iterator();
         
         int i = 0;
-        while(iterator1.hasNext()){
-          while(iterator2.hasNext()){
+        while(iterator1.hasNext() && iterator2.hasNext()){
+          
               
-              if(iterator1.next().toString().equals(iterator2.next().toString()) == false){
+              if(iterator1.next().equals(iterator2.next()) != true){
                    
-                  originalAndMutated[0] = iterator1.next().toString();
-                  originalAndMutated[1] = iterator2.next().toString();
+                  originalAndMutated[0] = translatedOriginal.get(i);
+                  originalAndMutated[1] = translatedMutated.get(i);
                   originalAndMutated[2] = Integer.toString(i);
                   
-              }i++;
+              }
               
-              
-          }  
+             i++; 
+          }
             
             
-        }
+        
         
         
         return originalAndMutated;
