@@ -211,7 +211,25 @@ public String forwardOrReverse(String isomerAccession) throws FileNotFoundExcept
            int index = exon.getEndIndexes(rs, exon.getExonRange(rs))[exon.getEndIndexes(rs, exon.getExonRange(rs)).length-1] - exon.absoluteMutationPosition(str, isomerAccession);
            
            char[] iterateSeq = nucleicSeq.toCharArray();
-           iterateSeq[index] = gene.getGeneData(str)[3].toCharArray()[0];
+           
+           
+           char mutationNuc = gene.getGeneData(str)[3].toCharArray()[0];
+           char mutationNuc1 = ' ';
+           if(mutationNuc == 'g'){
+               mutationNuc1 = 'c';
+           }
+            if(mutationNuc == 't'){
+               mutationNuc1 = 'a';
+           }
+            if(mutationNuc == 'a'){
+               mutationNuc1 = 't';
+           }
+            if(mutationNuc == 'c'){
+               mutationNuc1 = 'g';
+           }
+           
+           
+           iterateSeq[index] = mutationNuc1; //gene.getGeneData(str)[3].toCharArray()[0];
            
      //    int start = rs.length()-exon.getEndIndexes(rs,exon.getCDSRange(rs))[0]-1;
        //  int end = rs.length() - exon.getStartIndexes(rs, exon.getCDSRange(rs))[0]-1;
