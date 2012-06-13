@@ -301,7 +301,7 @@ public class ExonData {
                      //        System.out.println(mutationPosition);
                             // System.out.println(this.getExonRange(rs)[mutation.exonIndex(str, isomerAccession)[0]-1]);
                            
-                          System.out.println(exon1 + " " + mutationPosition);
+                    //      System.out.println(exon1 + " " + mutationPosition);
                           //   i++;
                         //    }
                           //  }
