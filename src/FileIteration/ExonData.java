@@ -227,10 +227,12 @@ public class ExonData {
         sl = rs.getInternalSymbolList(); 
         this.getExonRange(rs);
         for (int i =0; i < this.getEntrySize(rs); i++){
-             
+             if(getStartIndexes(rs,this.getCDSRange(rs))[0] == 0 &&  getEndIndexes(rs,this.getCDSRange(rs))[0] == 0){
+                 nucSeq = null;
+             }else{
               tempExonSeq = sl.subStr(getStartIndexes(rs,this.getExonRange(rs))[i], getEndIndexes(rs,this.getExonRange(rs))[i]);
               nucSeq = nucSeq+ tempExonSeq;
-              
+             }
        }
        
         
@@ -245,17 +247,23 @@ public class ExonData {
         RichSequence rs = null;
         GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
         
+        
         rs = grsdb.getRichSequence(isomerAccession);
         sl = rs.getInternalSymbolList(); 
-        this.getExonRange(rs);
+       
      //   for (int i =0; i < this.getEntrySize(rs); i++){
+        
+          if( getStartIndexes(rs,this.getCDSRange(rs))[0] == 0  &&  getEndIndexes(rs,this.getCDSRange(rs))[0] == 0 ){
+      nucSeq = null;
+       }else{
              
               tempExonSeq = sl.subStr(getStartIndexes(rs,this.getCDSRange(rs))[0], getEndIndexes(rs,this.getCDSRange(rs))[0]);
               nucSeq = tempExonSeq;
-              
-     //  }
-       
-        
+          }    
+     
+        if(nucSeq == null){
+           System.out.println("Not Avaliable");
+      }
         return nucSeq;
     }
            public int absoluteMutationPosition(String str, String isomerAccession) throws FileNotFoundException, IOException, BioException{ //works as expected. Certain Strains have country annotation.
@@ -269,7 +277,10 @@ public class ExonData {
              rs = grsdb.getRichSequence(isomerAccession);
              
              int exon1 = mutation.exonIndex(str, isomerAccession)[0];
-             
+             if(exon1 == 0){
+                 exon1 = 1;
+                 
+             }
             
             int[] yo = this.getStartIndexes(rs, this.getExonRange(rs));
              
@@ -287,7 +298,10 @@ public class ExonData {
                             //Check each note to see if it matches one of the required ComparableTerms
                   //          if(note.getTerm().equals(exonNumber)){
                  //         if(note.getValue().toString().equals(exon)){
-                               
+                      //  try{ 
+            
+            
+           
                           if(mutation.forwardOrReverse(isomerAccession).equals("+")){    
                               int absolutePos = this.getStartIndexes(rs, this.getExonRange(rs))[exon1-1];
                              mutationPosition =  absolutePos + mutation.exonIndex(str,isomerAccession)[1]-1;
@@ -298,6 +312,10 @@ public class ExonData {
                                int absolutePos = this.getStartIndexes(rs, this.getExonRange(rs))[exon1-1];
                                mutationPosition =  absolutePos + mutation.exonIndex(str,isomerAccession)[1];
                           }
+                    //    }
+                       // catch(ArrayIndexOutOfBoundsException e){
+                     //       System.out.println("Not Available");
+                      //  }
                      //        System.out.println(mutationPosition);
                             // System.out.println(this.getExonRange(rs)[mutation.exonIndex(str, isomerAccession)[0]-1]);
                            

@@ -38,14 +38,17 @@ public class MutationComparison {
     //      mutation.exonIndex(str, name.getLargest(name.getAccession(name.getGeneData(str))));
     //  exon.absoluteMutationPosition(str, name.getLargest(name.getAccession(name.getGeneData(str))));
       //  mutation.convertOriginalToArray(str, name.getLargest(name.getAccession(name.getGeneData(str))));
-      if(name.getLargest(name.getAccession(name.getGeneData(str)))!= null){                           
+      if(name.getLargest(name.getAccession(name.getGeneData(str)))!= null && exon.getExons(name.getLargest(name.getAccession(name.getGeneData(str))))!=null && exon.getCDS(name.getLargest(name.getAccession(name.getGeneData(str))))!=null){           
+          
+              
+          
           
          
      //    protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))));
        System.out.println(name.getGeneData(str)[0] +"\t"+ name.getLargest(name.getAccession(name.getGeneData(str))) +"\t" + protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[0] + "\t" +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[1] + "\t" +  protein.proteinComparison(str, name.getLargest(name.getAccession(name.getGeneData(str))))[2]);
         // protein.translatedOriginal(str, name.getLargest(name.getAccession(name.getGeneData(str))));
+     
       }
-        
        }
    }
         
