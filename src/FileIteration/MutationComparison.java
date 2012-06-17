@@ -38,7 +38,7 @@ public class MutationComparison {
     //      mutation.exonIndex(str, name.getLargest(name.getAccession(name.getGeneData(str))));
     //  exon.absoluteMutationPosition(str, name.getLargest(name.getAccession(name.getGeneData(str))));
       //  mutation.convertOriginalToArray(str, name.getLargest(name.getAccession(name.getGeneData(str))));
-      if(name.getLargest(name.getAccession(name.getGeneData(str)))!= null && exon.getExons(name.getLargest(name.getAccession(name.getGeneData(str))))!=null && exon.getCDS(name.getLargest(name.getAccession(name.getGeneData(str))))!=null){           
+      if(name.getLargest(name.getAccession(name.getGeneData(str)))!= null && exon.getExons(name.getLargest(name.getAccession(name.getGeneData(str))))!=null && exon.getCDS(name.getLargest(name.getAccession(name.getGeneData(str))))!=null ){           
           
               
           

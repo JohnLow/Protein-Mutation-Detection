@@ -84,7 +84,7 @@ public class ExonData {
        
     public String[] getCDSRange(RichSequence rs){
     
-     geneRange = new String[this.getEntrySize(rs)];
+     geneRange = new String[1];
      ff = new FeatureFilter.ByType("CDS");
              fh = rs.filter(ff);
                 int i = 0;
@@ -95,7 +95,7 @@ public class ExonData {
                         //Get the annotation of the feature
                         ra = (RichAnnotation)rf.getAnnotation();
                         featureLocation = rf.getLocation().toString();
-                        geneRange[i] = featureLocation;
+                        geneRange[0]=featureLocation;                       
                         i++;
                 
                 }
@@ -229,7 +229,10 @@ public class ExonData {
         for (int i =0; i < this.getEntrySize(rs); i++){
              if(getStartIndexes(rs,this.getCDSRange(rs))[0] == 0 &&  getEndIndexes(rs,this.getCDSRange(rs))[0] == 0){
                  nucSeq = null;
-             }else{
+             }if(this.getExonRange(rs).length ==0){
+                 nucSeq = null;
+             }
+             else{
               tempExonSeq = sl.subStr(getStartIndexes(rs,this.getExonRange(rs))[i], getEndIndexes(rs,this.getExonRange(rs))[i]);
               nucSeq = nucSeq+ tempExonSeq;
              }
@@ -253,13 +256,19 @@ public class ExonData {
        
      //   for (int i =0; i < this.getEntrySize(rs); i++){
         
-          if( getStartIndexes(rs,this.getCDSRange(rs))[0] == 0  &&  getEndIndexes(rs,this.getCDSRange(rs))[0] == 0 ){
-      nucSeq = null;
-       }else{
+//         if( getStartIndexes(rs,this.getCDSRange(rs))[0] == 0  &&  getEndIndexes(rs,this.getCDSRange(rs))[0] == 0 ){
+  //   nucSeq = null;
+  if(this.getExonRange(rs).length ==0){
+                 nucSeq = null;
+             }
+  if(getCDSRange(rs)[0]==(null)){
+                 nucSeq = null;
+             }
+else{
              
               tempExonSeq = sl.subStr(getStartIndexes(rs,this.getCDSRange(rs))[0], getEndIndexes(rs,this.getCDSRange(rs))[0]);
               nucSeq = tempExonSeq;
-          }    
+         }    
      
         if(nucSeq == null){
            System.out.println("Not Avaliable");
