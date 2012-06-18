@@ -154,8 +154,21 @@ public String forwardOrReverse(String isomerAccession) throws FileNotFoundExcept
          SymbolList sl;
          RichSequence rs = null;
        GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
-       rs = grsdb.getRichSequence(isomerAccession);
+      
+         boolean loop = true;
+      while(loop){
+            
+        try{
+             rs = grsdb.getRichSequence(isomerAccession);
        sl = rs.getInternalSymbolList(); 
+        loop = false;
+        }
+        catch(BioException e){
+            
+        }
+        }
+       
+ 
        
        
          if(mutation.forwardOrReverse(isomerAccession).equals("-")){
@@ -187,7 +200,26 @@ public String forwardOrReverse(String isomerAccession) throws FileNotFoundExcept
        String nucleicSeq = exon.getExons(isomerAccession);
        RichSequence rs = null;
        GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
-       rs = grsdb.getRichSequence(isomerAccession);
+       
+       
+       
+      
+       
+       
+        boolean loop = true;
+      while(loop){
+            
+        try{
+         rs = grsdb.getRichSequence(isomerAccession);
+        loop = false;
+        }
+        catch(BioException e){
+            
+        }
+        }
+       
+       
+       
        String finalMutant ="";
       
         if(mutation.forwardOrReverse(isomerAccession).equals("+")){

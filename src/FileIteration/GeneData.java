@@ -63,7 +63,7 @@ public class GeneData {
         return accessionNumber; 
     }
 
-    public String getLargest(ArrayList <String> accessionList) throws BioException {  //compares all isomers and returns the accession of the largest
+    public String getLargest(ArrayList <String> accessionList) {  //compares all isomers and returns the accession of the largest
         
         String largestIsomer = null;
         Iterator iterator = accessionList.iterator();
@@ -77,7 +77,20 @@ public class GeneData {
         int i = 0;
         while(iterator.hasNext()){
             
-             rs = grsdb.getRichSequence(iterator.next().toString());
+            
+             boolean loop = true;
+        
+        while(loop){
+            
+        try{
+        rs = grsdb.getRichSequence(iterator.next().toString());
+        loop = false;
+        }
+        catch(BioException e){
+            
+        }
+        }
+             
              compareLengths[i] = rs.length();
              i++;
         }

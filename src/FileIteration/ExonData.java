@@ -215,16 +215,28 @@ public class ExonData {
     }
     
  
-  public String getExons(String isomerAccession) throws BioException{
+  public String getExons(String isomerAccession){
         
         String nucSeq ="";
         String tempExonSeq = null;
-        SymbolList sl;
+        SymbolList sl = null;
         RichSequence rs = null;
         GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
         
+        boolean loop = true;
+        
+        while(loop){
+            
+        try{
         rs = grsdb.getRichSequence(isomerAccession);
         sl = rs.getInternalSymbolList(); 
+        loop = false;
+        }
+        catch(BioException e){
+            
+        }
+        }
+        
         this.getExonRange(rs);
         for (int i =0; i < this.getEntrySize(rs); i++){
              if(getStartIndexes(rs,this.getCDSRange(rs))[0] == 0 &&  getEndIndexes(rs,this.getCDSRange(rs))[0] == 0){
@@ -242,18 +254,26 @@ public class ExonData {
         return nucSeq;
     }
     
-    public String getCDS(String isomerAccession) throws BioException{
-        
+    public String getCDS(String isomerAccession) {
         String nucSeq ="";
         String tempExonSeq = null;
-        SymbolList sl;
+        SymbolList sl = null;
         RichSequence rs = null;
         GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
         
+         boolean loop = true;
         
+        while(loop){
+            
+        try{
         rs = grsdb.getRichSequence(isomerAccession);
         sl = rs.getInternalSymbolList(); 
-       
+        loop = false;
+        }
+        catch(BioException e){
+            
+        }
+        }
      //   for (int i =0; i < this.getEntrySize(rs); i++){
         
 //         if( getStartIndexes(rs,this.getCDSRange(rs))[0] == 0  &&  getEndIndexes(rs,this.getCDSRange(rs))[0] == 0 ){
@@ -261,7 +281,7 @@ public class ExonData {
   if(this.getExonRange(rs).length ==0){
                  nucSeq = null;
              }
-  if(getCDSRange(rs)[0]==(null)){
+  else if(getCDSRange(rs)[0]==(null)){
                  nucSeq = null;
              }
 else{
@@ -283,7 +303,21 @@ else{
              
              RichSequence rs = null;
              GenbankRichSequenceDB grsdb = new GenbankRichSequenceDB();
-             rs = grsdb.getRichSequence(isomerAccession);
+             
+             
+         
+         boolean loop = true;
+         
+                 while(loop){
+            
+        try{
+        rs = grsdb.getRichSequence(isomerAccession);
+      loop = false;
+        }
+        catch(BioException e){
+            
+        }
+        }
              
              int exon1 = mutation.exonIndex(str, isomerAccession)[0];
              if(exon1 == 0){
